@@ -11,16 +11,17 @@ class Biblioteca(models.Model):
 
     nombre = fields.Char(required=True)
     tipo_documento = fields.Selection([
-        ('c', 'Cédula'),
-        ('r', 'RUC'),
-        ('p', 'Pasaporte')
-    ], required=True)
+    ('c', 'Cédula'),
+    ('r', 'RUC'),
+    ('p', 'Pasaporte')
+    ], required=True, widget='radio')
     ruc = fields.Char(string="RUC")
     cedula = fields.Char(string="Cédula")
     pasaporte = fields.Char(string="Pasaporte")
-    direccion = fields.Char()
+    direccion = fields.Char(widget='address')
     telefono = fields.Char()
-    fecha = fields.Datetime(string="Fecha creación", default=lambda self: datetime.datetime.now())
+    fecha = fields.Datetime(string="Fecha creación", default=fields.Datetime.now, widget='datetime')
+
 
     @api.onchange("cedula")
     def onchange_cedula(self):
@@ -106,55 +107,67 @@ class Personas(models.Model):
     nombre = fields.Char()
     ci = fields.Char()
     telefono = fields.Char()
-    direccion = fields.Char()
-    sexo = fields.Selection([('m', 'Masculino'),('f', 'Femenino')])
-    edad = fields.Integer()
-    tipo = fields.Selection([('e', 'Empleado'), ('c','Cliente')])
-    biblioteca_id = fields.Many2one('biblioteca.biblioteca')
+    direccion = fields.Char(widget='address')
+    sexo = fields.Selection([
+    ('m', 'Masculino'),
+    ('f', 'Femenino')
+    ], widget='radio')
+    edad = fields.Integer(widget='integer')
+    tipo = fields.Selection([
+    ('e', 'Empleado'),
+    ('c', 'Cliente')
+    ], widget='radio')
+    biblioteca_id = fields.Many2one('biblioteca.biblioteca', string="Biblioteca", widget='many2one')
 
 class Categoria(models.Model):
     _name = 'biblioteca.categoria'
 
     nombre = fields.Char()
-    restriccion = fields.Char()
+    restriccion = fields.Selection([
+        ('mayores', 'Solo para mayores de edad'),
+        ('menores', 'Solo para menores de edad'),
+        ('publico', 'Para todo público')
+    ], string="Restricción")
 
 class Tipo(models.Model):
     _name = 'biblioteca.tipo'
     _description = ''
 
-    nombre = fields.Char()
-    descripcion = fields.Text()
+    nombre = fields.Char(widget='char')
+    descripcion = fields.Text(widget='text')
 
 class Libros(models.Model):
     _name = 'biblioteca.libros'
-    _description = ''
+    _description = 'Gestión de libros en la biblioteca'
 
-    autor = fields.Char()
-    nombre = fields.Char()
-    isbn = fields.Char()
-    aniopublicacion = fields.Char()
-    cantidad = fields.Integer()
-    biblioteca_id = fields.Many2one('biblioteca.biblioteca')
-    categoria_id = fields.Many2one('biblioteca.categoria')
-    tipo_id = fields.Many2one('biblioteca.tipo')
+    autor = fields.Char(widget='char')
+    nombre = fields.Char(widget='char')
+    isbn = fields.Char(widget='barcode')
+    aniopublicacion = fields.Date(string="Año de Publicación", widget='date')
+    cantidad = fields.Integer(widget='integer')
+    biblioteca_id = fields.Many2one('biblioteca.biblioteca', string="Biblioteca", widget='many2one')
+    categoria_id = fields.Many2one('biblioteca.categoria', string="Categoría", widget='many2one')
+    tipo_id = fields.Many2one('biblioteca.tipo', string="Tipo", widget='many2one')
+
 
 class Prestamo(models.Model):
     _name = 'biblioteca.prestamo'
-    _description = ''
+    _description = 'Registro de préstamos de libros'
 
-    fecha_prestamo = fields.Datetime()
-    tiempo = fields.Float()
-    retraso = fields.Integer()
-    cliente_id = fields.Many2one('biblioteca.personas')	
-    empleado_id = fields.Many2one('biblioteca.personas')
-    detalle_ids = fields.One2many('biblioteca.detalleprestamos','prestamo_id')
+    fecha_prestamo = fields.Datetime(string="Fecha de Préstamo", widget='datetime')
+    tiempo = fields.Float(string="Duración del Préstamo (días)")
+    retraso = fields.Integer(string="Retraso", widget='progressbar')
+    cliente_id = fields.Many2one('biblioteca.personas', string="Cliente", widget='many2one')    
+    empleado_id = fields.Many2one('biblioteca.personas', string="Empleado", widget='many2one')
+    detalle_ids = fields.One2many('biblioteca.detalleprestamos', 'prestamo_id', string="Detalles del Préstamo")
 
 
 class DetallePrestamos(models.Model):
     _name = 'biblioteca.detalleprestamos'
-    _description = ''
+    _description = 'Detalle de los libros en cada préstamo'
 
-    libro_id = fields.Many2one('biblioteca.libros')
-    prestamo_id = fields.Many2one('biblioteca.prestamos')
+    libro_id = fields.Many2one('biblioteca.libros', string="Libro", widget='many2one')
+    prestamo_id = fields.Many2one('biblioteca.prestamo', string="Préstamo", widget='many2one')
+
 
 

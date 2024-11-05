@@ -39,7 +39,7 @@
            <field name="pasaporte" invisible ="tipo_documento not in ('p')" required="tipo_documento in ('p')"/>
            </group>
            <group col ="2">
-           <field name="telefono"/>
+           <field name="telefono" placeholder="Ej: 0991234567"/>
            </group>
            <group>
            <field name="fecha" readonly="1"/>
