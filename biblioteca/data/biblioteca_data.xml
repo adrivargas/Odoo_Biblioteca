@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+      <record id="UTE_data" model="biblioteca.biblioteca">
+        <field name="nomre"></field>
+        <field name="tipo_documento">r</field>
+        <>
+   </data>
+</odoo>

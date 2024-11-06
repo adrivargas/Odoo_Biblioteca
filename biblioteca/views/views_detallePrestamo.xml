@@ -1,40 +1,83 @@
 <odoo>
   <data>
-    <!-- Vista de Lista -->
-    <record model="ir.ui.view" id="biblioteca_detallePrestamos_list">
-      <field name="name">detallePrestamos.list</field>
-      <field name="model">biblioteca.detallePrestamos</field>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="biblioteca_detallePrestamos">
+      <field name="name">prestamo.list</field>
+      <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
-        <tree>
-          <field name="libro_id"/>
+        <list>
+          <field name="libro_id "/>
           <field name="prestamo_id"/>
-        </tree>
+        </list>
       </field>
     </record>
 
-    <!-- Vista de Formulario -->
-    <record model="ir.ui.view" id="biblioteca_detallePrestamos_form">
-      <field name="name">detallePrestamos.form</field>
-      <field name="model">biblioteca.detallePrestamos</field>
+  <record model="ir.ui.view" id="biblioteca_prestamo_form">
+      <field name="name">biblioteca_prestamo_form</field>
+      <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
-        <form string="Detalle de Préstamo">
-          <group>
-            <field name="libro_id"/>
-            <field name="prestamo_id"/>
+        <form>
+          <group col="2">
+            <field name="fecha_prestamo"/>
+            <field name="tiempo"/>
+            <field name="retraso"/>
           </group>
+          <group>
+            <field name="cliente_id"/>
+            <field name="empleado_id"/>
+          </group>
+          <notebook>
+            <page string="Detalles del Préstamo">
+              <field name="detalle_ids">
+                <tree editable="bottom">
+                  <field name="libro_id"/>
+                </tree>
+              </field>
+            </page>
+          </notebook>
         </form>
       </field>
     </record>
 
-    <!-- Acción para Abrir la Vista de Lista y Formulario -->
+
+    <!-- actions opening views on models -->
+
     <record model="ir.actions.act_window" id="detallePrestamo_action_window">
-      <field name="name">Detalle de Préstamo</field>
+      <field name="name">libro window</field>
+      <field name="res_model">biblioteca.detallePrestamos</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- server action to the one above -->
+
+    <record model="ir.actions.server" id="biblioteca.action_server">
+       <field name="name">Detalle de Préstamo</field>
       <field name="res_model">biblioteca.detallePrestamos</field>
       <field name="view_mode">tree,form</field>
       <field name="view_id" ref="biblioteca_detallePrestamos_list"/>
     </record>
 
-    <!-- Menú para Gestionar Préstamos de Libros -->
-    <menuitem name="Gestión de Préstamos de Libros" id="Gestion_Prestamos" parent="biblioteca.menu_root" action="detallePrestamo_action_window"/>
+
+    <!-- Top menu item -->
+<!-- 
+    <menuitem name="Gestion libro" id="Gestion_libro"/> -->
+    
+
+    <!-- menu categories -->
+     <menuitem name="Gestion Prestamos Libros" id="Gestion_Prestamos" parent="biblioteca.menu_root" action="detallePrestamo_action_window"/>
+
+    <!-- <menuitem name="Gestion Biblioteca" id="biblioteca.gestionbiblioteca" parent="biblioteca.menu_root" action="biblioteca.action_window"/>
+
+    <menuitem name="Base Data" id="biblioteca.base_data" parent="biblioteca.menu_root" action="biblioteca.action_window"/> -->
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="biblioteca.menu_1_list" parent="biblioteca.menu_1"
+              action="biblioteca.action_window"/>
+    <menuitem name="Server to list" id="biblioteca" parent="biblioteca.menu_2"
+              action="biblioteca.action_server"/>
+-->
   </data>
 </odoo>

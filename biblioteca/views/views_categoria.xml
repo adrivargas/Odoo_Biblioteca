@@ -1,40 +1,73 @@
 <odoo>
   <data>
-    <!-- List View -->
-    <record model="ir.ui.view" id="biblioteca_categoria_list">
-      <field name="name">categoria.list</field>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="biblioteca_categoria">
+      <field name="name">categoria list</field>
       <field name="model">biblioteca.categoria</field>
       <field name="arch" type="xml">
-        <tree>
+        <list>
           <field name="nombre"/>
           <field name="restriccion"/>
-        </tree>
+        </list>
       </field>
     </record>
 
-    <!-- Form View -->
-    <record model="ir.ui.view" id="biblioteca_categoria_form">
-      <field name="name">categoria.form</field>
+  <record model="ir.ui.view" id="biblioteca_categoria_form">
+      <field name="name">biblioteca form</field>
       <field name="model">biblioteca.categoria</field>
       <field name="arch" type="xml">
-        <form string="Categoría de Biblioteca">
-          <group>
-            <field name="nombre"/>
-            <field name="restriccion"/>
-          </group>
+        <form>
+          <field name="nombre"/>
+          <field name="restriccion"/>
         </form>
       </field>
     </record>
 
-    <!-- Window Action -->
+
+    <!-- actions opening views on models -->
+
     <record model="ir.actions.act_window" id="categoria_action_window">
-      <field name="name">Categoría</field>
+      <field name="name">Categoria</field>
       <field name="res_model">biblioteca.categoria</field>
-      <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="biblioteca_categoria_list"/>
+      <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Menu Item -->
-    <menuitem name="Gestión de Categorías" id="gestion_categorias_menu" parent="biblioteca.menu_root" action="categoria_action_window"/>
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="biblioteca.action_server">
+      <field name="name">biblioteca server</field>
+      <field name="model_id" ref="model_biblioteca_biblioteca"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!-- 
+    <menuitem name="Gestion libro" id="Gestion_libro"/> -->
+    
+
+    <!-- menu categories -->
+     <menuitem name="Gestion Categorias" id="Gestion_Categorias" parent="biblioteca.menu_root" action="categoria_action_window"/>
+
+    <!-- <menuitem name="Gestion Biblioteca" id="biblioteca.gestionbiblioteca" parent="biblioteca.menu_root" action="biblioteca.action_window"/>
+
+    <menuitem name="Base Data" id="biblioteca.base_data" parent="biblioteca.menu_root" action="biblioteca.action_window"/> -->
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="biblioteca.menu_1_list" parent="biblioteca.menu_1"
+              action="biblioteca.action_window"/>
+    <menuitem name="Server to list" id="biblioteca" parent="biblioteca.menu_2"
+              action="biblioteca.action_server"/>
+-->
   </data>
 </odoo>

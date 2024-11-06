@@ -8,6 +8,7 @@ import re
 class Biblioteca(models.Model):
     _name = 'biblioteca.biblioteca'
     _description = 'Modulo para el manejo de bibliotecas'
+    _rec_name = 'nombre'
 
     nombre = fields.Char(required=True)
     tipo_documento = fields.Selection([
@@ -111,13 +112,19 @@ class Personas(models.Model):
     sexo = fields.Selection([
     ('m', 'Masculino'),
     ('f', 'Femenino')
-    ], widget='radio')
+    ])
     edad = fields.Integer(widget='integer')
     tipo = fields.Selection([
     ('e', 'Empleado'),
     ('c', 'Cliente')
-    ], widget='radio')
+    ])
     biblioteca_id = fields.Many2one('biblioteca.biblioteca', string="Biblioteca", widget='many2one')
+    display_name = fields.Char(string='Nombre', store=False, compute='_compute_display_name')
+    
+    @api.depends('nombre', 'ci')
+    def _compute_display_name(self):
+        for record in self:
+            record.display_name = f'{record.ci} - {record.nombre}'
 
 class Categoria(models.Model):
     _name = 'biblioteca.categoria'
