@@ -3,39 +3,29 @@
     <!-- explicit list view definition -->
 
     <record model="ir.ui.view" id="biblioteca_detallePrestamos">
-      <field name="name">prestamo.list</field>
+      <field name="name">personas list</field>
       <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
         <list>
-          <field name="libro_id "/>
-          <field name="prestamo_id"/>
+         <field name="fecha_prestamo"/>
+         <field name="tiempo"/>
+         <field name="retraso"/>
+         <field name="cliente_id"/>
+         <field name="empleado_id"/> 
         </list>
       </field>
     </record>
 
-  <record model="ir.ui.view" id="biblioteca_prestamo_form">
-      <field name="name">biblioteca_prestamo_form</field>
+  <record model="ir.ui.view" id="biblioteca_detalleprestamo_form">
+      <field name="name">biblioteca form</field>
       <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
         <form>
-          <group col="2">
-            <field name="fecha_prestamo"/>
-            <field name="tiempo"/>
-            <field name="retraso"/>
-          </group>
-          <group>
-            <field name="cliente_id"/>
-            <field name="empleado_id"/>
-          </group>
-          <notebook>
-            <page string="Detalles del Préstamo">
-              <field name="detalle_ids">
-                <tree editable="bottom">
-                  <field name="libro_id"/>
-                </tree>
-              </field>
-            </page>
-          </notebook>
+         <field name="fecha_prestamo"/>
+         <field name="tiempo"/>
+         <field name="retraso"/>
+         <field name="cliente_id"/>
+         <field name="empleado_id"/> 
         </form>
       </field>
     </record>
@@ -49,19 +39,27 @@
       <field name="view_mode">list,form</field>
     </record>
 
+    <menuitem name="Gestion detallePrestamo" id="gestiontdetalleprestamo" parent="biblioteca.menu_root" action="detallePrestamo_action_window"/>
+
 
     <!-- server action to the one above -->
-
-    <record model="ir.actions.server" id="biblioteca.action_server">
-       <field name="name">Detalle de Préstamo</field>
-      <field name="res_model">biblioteca.detallePrestamos</field>
-      <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="biblioteca_detallePrestamos_list"/>
-    </record>
-
+<!--
+    <!-- <record model="ir.actions.server" id="biblioteca.action_server">
+      <field name="name">biblioteca server</field>
+      <field name="model_id" ref="model_biblioteca_biblioteca"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record> -->
+-->
 
     <!-- Top menu item -->
-<!-- 
+<!-- <!-- 
     <menuitem name="Gestion libro" id="Gestion_libro"/> -->
     
 
@@ -73,7 +71,7 @@
     <menuitem name="Base Data" id="biblioteca.base_data" parent="biblioteca.menu_root" action="biblioteca.action_window"/> -->
 
     <!-- actions -->
-<!--
+<!-- -->
     <menuitem name="List" id="biblioteca.menu_1_list" parent="biblioteca.menu_1"
               action="biblioteca.action_window"/>
     <menuitem name="Server to list" id="biblioteca" parent="biblioteca.menu_2"

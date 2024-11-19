@@ -22,6 +22,9 @@ class Biblioteca(models.Model):
     direccion = fields.Char(widget='address')
     telefono = fields.Char()
     fecha = fields.Datetime(string="Fecha creación", default=fields.Datetime.now, widget='datetime')
+    active= fields.Boolean(string="Activo",default=True)
+    state = fields.Selection([('b','Borrador'),('v','Validado'),('a','Activado')],string="Estados",
+                             default='b', group_expand=True)
 
 
     @api.onchange("cedula")
@@ -120,7 +123,8 @@ class Personas(models.Model):
     ])
     biblioteca_id = fields.Many2one('biblioteca.biblioteca', string="Biblioteca", widget='many2one')
     display_name = fields.Char(string='Nombre', store=False, compute='_compute_display_name')
-    
+    active= fields.Boolean(string="Activo",default=True)
+    state = fields.Selection([('b','Borrador'),('v','Validado'),('a','Activado')],string="Estados")
     @api.depends('nombre', 'ci')
     def _compute_display_name(self):
         for record in self:
@@ -128,7 +132,7 @@ class Personas(models.Model):
 
 class Categoria(models.Model):
     _name = 'biblioteca.categoria'
-
+    _rec_name = 'nombre'
     nombre = fields.Char()
     restriccion = fields.Selection([
         ('mayores', 'Solo para mayores de edad'),
@@ -139,14 +143,14 @@ class Categoria(models.Model):
 class Tipo(models.Model):
     _name = 'biblioteca.tipo'
     _description = ''
-
+    _rec_name = 'nombre'
     nombre = fields.Char(widget='char')
     descripcion = fields.Text(widget='text')
 
 class Libros(models.Model):
     _name = 'biblioteca.libros'
     _description = 'Gestión de libros en la biblioteca'
-
+    _rec_name = 'autor'
     autor = fields.Char(widget='char')
     nombre = fields.Char(widget='char')
     isbn = fields.Char(widget='barcode')
@@ -155,12 +159,18 @@ class Libros(models.Model):
     biblioteca_id = fields.Many2one('biblioteca.biblioteca', string="Biblioteca", widget='many2one')
     categoria_id = fields.Many2one('biblioteca.categoria', string="Categoría", widget='many2one')
     tipo_id = fields.Many2one('biblioteca.tipo', string="Tipo", widget='many2one')
+    
+    @api.depends('categoria_id')
+    def _compute_display_name(self):
+        for record in self:
+            record.display_name = f'{record.categoria_id}'
+
 
 
 class Prestamo(models.Model):
     _name = 'biblioteca.prestamo'
     _description = 'Registro de préstamos de libros'
-
+    
     fecha_prestamo = fields.Datetime(string="Fecha de Préstamo", widget='datetime')
     tiempo = fields.Float(string="Duración del Préstamo (días)")
     retraso = fields.Integer(string="Retraso", widget='progressbar')

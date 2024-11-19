@@ -2,24 +2,24 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="biblioteca_categoria">
-      <field name="name">categoria list</field>
-      <field name="model">biblioteca.categoria</field>
+    <record model="ir.ui.view" id="biblioteca_tipo">
+      <field name="name">tipo list</field>
+      <field name="model">biblioteca.tipo</field>
       <field name="arch" type="xml">
         <list>
           <field name="nombre"/>
-          <field name="restriccion"/>
+          <field name="descripcion"/>
         </list>
       </field>
     </record>
 
-  <record model="ir.ui.view" id="biblioteca_categoria_form">
-      <field name="name">biblioteca_categoria_form</field>
-      <field name="model">biblioteca.categoria</field>
+  <record model="ir.ui.view" id="biblioteca.tipo_form">
+      <field name="name">biblioteca_tipo_form</field>
+      <field name="model">biblioteca.tipo</field>
       <field name="arch" type="xml">
         <form>
           <field name="nombre"/>
-          <field name="restriccion"/>
+          <field name="descripcion"/> 
         </form>
       </field>
     </record>
@@ -27,16 +27,16 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="categoria_action_window">
-      <field name="name">Categoria</field>
-      <field name="res_model">biblioteca.categoria</field>
+    <record model="ir.actions.act_window" id="tipo_action_window">
+      <field name="name">tipo window</field>
+      <field name="res_model">biblioteca.tipo</field>
       <field name="view_mode">list,form</field>
     </record>
 
 
     <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="biblioteca.action_server">
+
+    <!-- <record model="ir.actions.server" id="biblioteca.action_server">
       <field name="name">biblioteca server</field>
       <field name="model_id" ref="model_biblioteca_biblioteca"/>
       <field name="state">code</field>
@@ -47,20 +47,18 @@
           "res_model": model._name,
         }
       </field>
-    </record>
--->
+    </record> -->
+
 
     <!-- Top menu item -->
-<!-- 
-    <menuitem name="Gestion libro" id="Gestion_libro"/> -->
-    
+
+   
 
     <!-- menu categories -->
-     <menuitem name="Gestion Categorias" id="Gestion_Categorias" parent="biblioteca.menu_root" action="categoria_action_window"/>
 
-    <!-- <menuitem name="Gestion Biblioteca" id="biblioteca.gestionbiblioteca" parent="biblioteca.menu_root" action="biblioteca.action_window"/>
+    <menuitem name="Gestion Tipo" id="gestiontipo" parent="biblioteca.menu_root" action="tipo_action_window"/>
 
-    <menuitem name="Base Data" id="biblioteca.base_data" parent="biblioteca.menu_root" action="biblioteca.action_window"/> -->
+   
 
     <!-- actions -->
 <!--

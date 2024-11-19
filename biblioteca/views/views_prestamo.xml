@@ -7,21 +7,28 @@
       <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
         <list>
+          <field name="fecha_prestamo"/>
           <field name="tiempo"/>
           <field name="retraso"/>
-         
+          <field name="cliente_id"/>
+          <field name="empleado_id"/>
+          <!-- <field name="detalle_ids"/> -->
         </list>
       </field>
     </record>
 
-  <record model="ir.ui.view" id="biblioteca_detallePrestamos_form">
-      <field name="name">prestamo form</field>
+  <record model="ir.ui.view" id="biblioteca_prestamo_form">
+      <field name="name">prestamo_form</field>
       <field name="model">biblioteca.prestamo</field>
       <field name="arch" type="xml">
         <form>
           <group>
-            <field name="libro_id"/>
-            <field name="prestamo_id"/>
+            <field name="fecha_prestamo"/>
+          <field name="tiempo"/>
+          <field name="retraso"/>
+          <field name="cliente_id"/>
+          <field name="empleado_id"/>
+          <!-- <field name="detalle_ids"/> -->
           </group>
         </form>
       </field>

@@ -14,11 +14,14 @@
       </field>
     </record>
 
-  <record model="ir.ui.view" id="biblioteca.list_form">
+   <record model="ir.ui.view" id="biblioteca.list_form">
       <field name="name">biblioteca list form</field>
       <field name="model">biblioteca.biblioteca</field>
       <field name="arch" type="xml">
         <form>
+         <header>
+           <field name="state" widget="statusbar" options="{'clickable':'1'}"/>
+         </header>
          <group col="3">
            <group>
            <field name="nombre"/>
@@ -49,13 +52,53 @@
       </field>
     </record>
 
+   <record model="ir.ui.view" id="biblioteca.list_kanban">
+      <field name="name">biblioteca list form</field>
+      <field name="model">biblioteca.biblioteca</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="nombre"/>
+          <field name="direccion"/>
+          <field name="telefono"/>
+          <template>
+            <t t-name="card">
+               <div class="o_kanban_details">
+                 <field name="nombre"/>
+                 <div class="o_kanban_subtitle">
+                   Direccion: <field name="direccion"/>
+                   Telefono: <field name="telefono"/>
+                  </div> 
+                </div>  
+            </t>
+          </template>  
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="biblioteca_search">
+      <field name="name">biblioteca list form</field>
+      <field name="model">biblioteca.biblioteca</field>
+      <field name="arch" type="xml">
+        <search>
+           <field name="nombre"/>
+           <field name="ruc"/>
+           <filter name="nombre_UTE" domain="[('nombre','=','UTE')]"/>
+           <filter name="nombre_Matriz" domain="[('nombre','=','UDLA')]"/>
+            <group string="Group By">
+              <filter name="groupby_ruc" context="{'group_by':'ruc'}" string="Agrupar RUC"/>
+              <filter name="groupby_state" context="{'group_by':'state'}" string="Agrupar Estados"/>
+            </group>  
+        </search>
+      </field>
+    </record>
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="biblioteca.action_window">
       <field name="name">biblioteca window</field>
       <field name="res_model">biblioteca.biblioteca</field>
-      <field name="view_mode">list,form</field>
+      <field name="context">{'search_default_groupby_state':1}</field>
+      <field name="view_mode">kanban,list,form</field>
     </record>
 
 
@@ -84,7 +127,7 @@
 
     <menuitem name="Gestion Biblioteca" id="biblioteca.gestionbiblioteca" parent="biblioteca.menu_root" action="biblioteca.action_window"/>
 
-    <menuitem name="Base Data" id="biblioteca.base_data" parent="biblioteca.menu_root" action="biblioteca.action_window"/>
+   
 
     <!-- actions -->
 <!--

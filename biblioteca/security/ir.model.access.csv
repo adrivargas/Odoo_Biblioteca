@@ -4,5 +4,8 @@ access_biblioteca_libro,biblioteca.libros,model_biblioteca_libros,base.group_use
 access_biblioteca_prestamo,biblioteca.prestamo,model_biblioteca_prestamo,base.group_user,1,1,1,1
 access_biblioteca_personas,biblioteca.personas,model_biblioteca_personas,base.group_user,1,1,1,1
 access_biblioteca_categoria,biblioteca.categoria,model_biblioteca_categoria,base.group_user,1,1,1,1
+access_biblioteca_tipo,biblioteca.tipo,model_biblioteca_tipo,base.group_user,1,1,1,1
+
+
 
 

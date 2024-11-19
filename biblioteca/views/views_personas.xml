@@ -11,30 +11,26 @@
           <field name="ci"/>
           <field name="telefono"/>
           <field name="direccion"/>
-          <field name="sexo"/>
-          <field name="edad"/>
+          <field name="sexo" widget ="radio"/>
+          <field name="edad" />
           <field name="tipo"/>
           <field name="biblioteca_id"/>
         </list>
       </field>
     </record>
 
-   <record model="ir.ui.view" id="biblioteca_persona_form">
+  <!-- <record model="ir.ui.view" id="biblioteca.form">
       <field name="name">biblioteca form</field>
-      <field name="model">biblioteca.personas</field>
+      <field name="model">biblioteca.biblioteca</field>
       <field name="arch" type="xml">
         <form>
           <field name="nombre"/>
-          <field name="ci"/>
-          <field name="telefono"/>
           <field name="direccion"/>
-          <field name="sexo" widget="radio"/>
-          <field name="edad"/>
-          <field name="tipo" widget="badge"/>
-          <field name="biblioteca_id"/>
+          <field name="ruc"/>
+          <field name="telefono"/>
         </form>
       </field>
-    </record>
+    </record> -->
 
 
     <!-- actions opening views on models -->

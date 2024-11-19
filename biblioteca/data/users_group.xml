@@ -1,0 +1,21 @@
+<?xml version="1.0" enconding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.module.category" id="module_biblioteca">
+      <field name="name">biblioteca</field>
+      <field name="description">Sistema de gestion de biblioteca</field>
+      <field name="squence">1</field>
+    </record>
+    <record model="res.groups" id="biblioteca_admin">
+      <field name="name">Administrador</field>
+      <field name="category_id" search="[('name','=','biblioteca')]"/>
+    </record>  
+
+    <record model="res.groups" id="biblioteca_user">
+      <field name="name">Usuario normal</field>
+      <field name="categoria_id" search="[('name','=','bilbioteca')]"/>
+    </record>
+
+  </data>
+
+</odoo>
